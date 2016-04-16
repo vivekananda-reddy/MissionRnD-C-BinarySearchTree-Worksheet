@@ -21,15 +21,69 @@ struct node{
 	int data;
 	struct node *right;
 };
-
-
+int preorder_recc(struct node*, int*, int);
+int inorder_recc(struct node*, int*, int);
+int postorder_recc(struct node*, int*, int);
 void inorder(struct node *root, int *arr){
+	if (arr == NULL)
+	{
+		return;
+	}
+	inorder_recc(root, arr, 0);
+}
+int inorder_recc(struct node *root, int *arr, int i)
+{
+	if (root == NULL)
+	{
+		return i;
+	}
 	
+	i=inorder_recc(root->left, arr, i);
+	arr[i] = root->data;
+	i++;
+	i=inorder_recc(root->right, arr, i);
+	return i;
 }
 void preorder(struct node *root, int *arr){
-	
-}
-void postorder(struct node *root, int *arr){
+	if (arr == NULL)
+	{
+		return;
+	}
+		preorder_recc(root, arr, 0);
 	
 }
 
+int preorder_recc(struct node *root, int *arr, int i)
+{
+	if (root == NULL)
+	{
+		return i;
+	}
+	arr[i] = root->data;
+	i++;
+	i=preorder_recc(root->left, arr, i);
+	i=preorder_recc(root->right, arr, i);
+	return i;
+}
+void postorder(struct node *root, int *arr){
+	if (arr == NULL)
+	{
+		return;
+	}
+	postorder_recc(root, arr, 0);
+}
+
+int postorder_recc(struct node *root, int *arr, int i)
+{
+	if (root == NULL)
+	{
+		return i;
+	}
+	
+	i=postorder_recc(root->left, arr, i);
+	
+	i=postorder_recc(root->right, arr, i);
+	arr[i] = root->data;
+	i++;
+	return i;
+}
