@@ -33,9 +33,49 @@ struct node{
 	struct node *right;
 };
 
+struct node* arrtobst(int*, int, int);
+struct node* newNode1(int);
 
 struct node * convert_array_to_bst(int *arr, int len){
-	
-	return NULL;
+	struct node* root;
+	if (arr==NULL||len<1)
+		return NULL;
+	else
+	{
+		root = arrtobst(arr, 0, len - 1);
+	}
+	return root;
 }
 
+struct node* arrtobst(int *arr, int i, int j)
+{
+	int mid = (i + j) / 2;
+	struct node*root;
+	root = newNode1(arr[mid]);
+	if (j - i == 1)
+	{
+		struct node*temp;
+		temp = newNode1(arr[j]);
+		temp->left = root;
+		return temp;
+	}
+	else if (i == j)
+	{
+		return root;
+	}
+	else
+	{
+		root->left = arrtobst(arr, i, mid - 1);
+		root->right = arrtobst(arr, mid + 1, j);
+		return root;
+	}
+}
+
+struct node *newNode1(int key)
+{
+	struct node *temp = (struct node *)malloc(sizeof(struct node));
+	temp->data = key;
+	temp->left = NULL;
+	temp->right = NULL;
+	return temp;
+}
