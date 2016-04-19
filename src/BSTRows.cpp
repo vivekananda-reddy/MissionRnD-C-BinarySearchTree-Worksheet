@@ -33,5 +33,31 @@ struct node{
 
 int* BSTRighttoLeftRows(struct node* root)
 {
-    return NULL;
+	struct node *queue[100],*temp;
+	int front = 0, rear = 0,i;
+	if (root==NULL)
+		return NULL;
+	queue[front] = root;
+	rear++;
+	int *a = (int*)malloc(sizeof(int) * 1);
+	i = 1;
+	while (front != rear)
+	{
+		temp = queue[front];
+		a = (int*)realloc(a,sizeof(int)*i);
+		a[i - 1] = temp->data;
+		if (temp->right != NULL)
+		{
+			queue[rear] = temp->right;
+			rear++;
+		}
+		if (temp->left != NULL)
+		{
+			queue[rear] = temp->left;
+			rear++;
+		}
+		front++;
+		i++;
+	}
+	return a;
 }
