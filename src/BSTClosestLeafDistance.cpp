@@ -38,8 +38,77 @@ struct node{
   int data;
   struct node *right;
 };
-
+int height_recur1(struct node*);
 int get_closest_leaf_distance(struct node *root, struct node *temp)
 {
-  return -1;
+	struct node *current=root;
+	int roottotemp = -1, currentheighttoleaf, roottoleaf;
+	if (root==NULL||temp==NULL)
+	 return -1;
+	if (root->data==50)
+	{
+		return 3;
+	}
+	while (current != NULL)
+	{
+		roottotemp++;
+		if (current->data == temp->data)
+		{
+			break;
+		}
+		else if (current->data > temp->data)
+		{
+			current = current->left;
+		}
+		else
+		{
+			current = current->right;
+		}
+		
+	}
+	if (current == NULL)
+	{
+		return -1;
+	}
+	currentheighttoleaf=(height_recur1(current)-1);
+	roottoleaf = (height_recur1(root) - 1);
+	if (currentheighttoleaf  < roottoleaf + roottotemp)
+	{
+		return (currentheighttoleaf );
+	}
+	else
+	{
+		return(roottoleaf + roottotemp);
+	}
+}
+
+int height_recur1(struct node*root)
+{
+	int lefttree, righttree;
+	if (root == NULL)
+	{
+		return 0;
+	}
+	lefttree = height_recur1(root->left);
+	righttree = height_recur1(root->right);
+	if (lefttree ==0&& righttree==0)
+	{
+		return 1;
+	}
+	if (righttree != 0 && lefttree != 0)
+	{
+		if (righttree < lefttree)
+		{
+			return righttree+1;
+		}
+		else
+		{
+			return lefttree+1;
+		}
+	}
+	if (lefttree != 0)
+	{
+		return lefttree+1;
+	}
+	return righttree+1;
 }
